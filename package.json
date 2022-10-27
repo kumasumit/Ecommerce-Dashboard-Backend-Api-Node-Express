@@ -1,0 +1,28 @@
+{
+  "name": "ecommerce-dashboard-backend-api",
+  "version": "1.0.0",
+  "description": "This is a node/express backend api for ecommerce dashboard.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumasumit/Ecommerce-Dashboard-Backend-Api-Node-Express.git"
+  },
+  "keywords": [
+    "Node",
+    "Express",
+    "Apis"
+  ],
+  "author": "Kumar Sumit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kumasumit/Ecommerce-Dashboard-Backend-Api-Node-Express/issues"
+  },
+  "homepage": "https://github.com/kumasumit/Ecommerce-Dashboard-Backend-Api-Node-Express#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0"
+  }
+}
