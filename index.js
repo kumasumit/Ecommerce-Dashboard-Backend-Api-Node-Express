@@ -1,20 +1,20 @@
 const express= require("express");
-const mongoose= require('mongoose');
+//require the mongodb connect function
+const connectMongoDB = require('./config/db');
 const app = express();
 const PORT = 8000;
-const connectDB =async ()=>{
-    mongoose.connect("mongodb://localhost:27017/e-commerce");
-    //here ecommerce is the database in the localhost
-    const productSchema= new mongoose.Schema({});
-    const product= mongoose.model("products",productSchema);
-    //here product is the mongoose model linked to productSchema
-    //here products is the collection in the ecommerce database
-    //which is linked to product model of mongoose, which is then linked to 
-    //productSchema of mongoose Schema.
-    const data = await product.find();
-    console.log("database connected", data);
-}
-//here we call the connectDB function which connects to the database
-connectDB();
 
+
+//here we call the connectDB function which connects to the database
+//ask rahul ?
+//whethether the mongoDB connect function should always be at the top or it can be anywhere
+connectMongoDB();
+//this is the middleware to read json data sent in the body of the request
+app.use(express.json());
+//All te routes will go through root.js inside routes
+//make sure app.use for routes is at the end of the index/server entry file,
+//so that routes are loaded only after all the other middlewares that is after all app.use cases
+app.use('/', require('./routes/root'));
+//app.use for routes must be at the bottom just before app.listen()
+//ask rahul why ?
 app.listen(PORT);
