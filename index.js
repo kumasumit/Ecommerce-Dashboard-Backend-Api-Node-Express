@@ -1,4 +1,7 @@
 const express= require("express");
+
+//require cors to solve the cors issue
+const cors = require('cors');
 //require the mongodb connect function
 const connectMongoDB = require('./config/db');
 const app = express();
@@ -11,6 +14,8 @@ const PORT = 8000;
 connectMongoDB();
 //this is the middleware to read json data sent in the body of the request
 app.use(express.json());
+//this is the middleware to address/solve the cors issue
+app.use(cors());
 //All te routes will go through root.js inside routes
 //make sure app.use for routes is at the end of the index/server entry file,
 //so that routes are loaded only after all the other middlewares that is after all app.use cases
