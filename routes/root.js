@@ -39,15 +39,7 @@ router.post("/login", async (req, res)=>{
         //if any field email and password is empty
         res.send({result: "Please enter both the fields"})
     }
-    let user = new User(req.body);
-    let result = await user.save();
-    //currently result is a json object, we need to convert to object data type
-    result.toObject();
-    //now result is of type object
-    //delete result.password will delete the password key value pair from result object, here result is the object and passoword is the key.
-    delete result.password;
-    //after saving the created user we send back the created user as response without the password field
-    res.send(result);
+
 })
 //finally we export the router at the bottom
 module.exports = router
