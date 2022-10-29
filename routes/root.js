@@ -64,11 +64,23 @@ router.get("/products", async (req, res) => {
         resp.send({ result: "No Products found" })
     }
 })
+
 // 5.Delete Product Api
-// An Api with delete request to specific products with required id from the database
+// An Api with delete request to delete specific product with required id from the database
 router.delete("/product/:id", async (req, res) => {
     let result = await Product.deleteOne({ _id: req.params.id });
     res.send(result)
+})
+
+// 6.Update Product Api
+// An Api with get request to update specific product with required id from the database
+router.get("/product/:id",async (req, res)=>{
+    let result  = await Product.findOne({_id:req.params.id})
+    if(result){
+        resp.send(result)
+    }else{
+        resp.send({"result":"No Record Found."})
+    }
 })
 
 //finally we export the router at the bottom
