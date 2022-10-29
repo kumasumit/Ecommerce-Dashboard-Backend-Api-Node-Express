@@ -4,7 +4,7 @@ const router = express.Router();
 //then we require the models required to process the controller actions
 const User = require('../models/User');
 const Product = require('../models/Product');
-const { application } = require('express');
+
 
 //1. Sign-Up Api 
 //An api with post request to rgister/signup - create a new user in the database
@@ -63,6 +63,12 @@ router.get("/products", async (req, res) => {
     } else {
         resp.send({ result: "No Products found" })
     }
+})
+// 5.Delete Product Api
+// An Api with delete request to specific products with required id from the database
+router.delete("/product/:id", async (req, res) => {
+    let result = await Product.deleteOne({ _id: req.params.id });
+    res.send(result)
 })
 
 //finally we export the router at the bottom
