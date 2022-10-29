@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 //then we require the models required to process the controller actions
 const User = require('../models/User');
-
+const Product = require('../models/Product');
 
 //1. Sign-Up Api 
 //An api with post request to rgister/signup - create a new user in the database
@@ -18,6 +18,7 @@ router.post("/register", async (req, res)=>{
     //after saving the created user we send back the created user as response without the password field
     res.send(result);
 })
+
 //2. Log-In Api 
 //An api with post request to login - create a new session for sign-up user in the database
 router.post("/login", async (req, res)=>{
@@ -39,6 +40,16 @@ router.post("/login", async (req, res)=>{
         //if any field email and password is empty
         res.send({result: "Please enter both the fields"})
     }
+
+})
+
+//3. Add Product Api 
+//An api with post request to add - create a new produc in the database.
+router.post("/add-product", async (req, res)=>{
+
+    let product = new Product(req.body);
+    let result = await product.save();
+    res.send(result);
 
 })
 //finally we export the router at the bottom
