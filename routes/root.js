@@ -60,7 +60,7 @@ router.get("/products", async (req, res) => {
     if (products.length > 0) {
         res.send(products)
     } else {
-        resp.send({ result: "No Products found" })
+        res.send({ result: "No Products found" })
     }
 })
 
@@ -92,11 +92,29 @@ router.put("/product/:id", async (req, res) => {
     )
     //here we first find the product by id, then set the value to req.body passed in frontent or postman
     if (result) {
-        resp.send(result)
+        res.send(result)
     } else {
-        resp.send({ "result": "No Record Found." })
+        res.send({ "result": "No Record Found." })
     }
 })
-
+// 8.Search Product Api
+// An Api with get request to search products with matching regex from the database
+router.get("/search/:key", async (req, res) => {
+    let result = await Product.find({
+        "$or": [
+            {
+                name: { $regex: req.params.key }  
+            },
+            {
+                company: { $regex: req.params.key }
+            },
+            {
+                category: { $regex: req.params.key }
+            }
+        ]
+        // here whatever the key is given after search it will search for the key in all these places
+    });
+    res.send(result);
+})
 //finally we export the router at the bottom
 module.exports = router
