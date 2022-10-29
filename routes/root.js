@@ -4,6 +4,7 @@ const router = express.Router();
 //then we require the models required to process the controller actions
 const User = require('../models/User');
 const Product = require('../models/Product');
+const { application } = require('express');
 
 //1. Sign-Up Api 
 //An api with post request to rgister/signup - create a new user in the database
@@ -52,5 +53,17 @@ router.post("/add-product", async (req, res)=>{
     res.send(result);
 
 })
+
+// 4. Product list Api
+// An Api with get request to get all products from the database
+router.get("/products", async (req, res) => {
+    const products = await Product.find();
+    if (products.length > 0) {
+        res.send(products)
+    } else {
+        resp.send({ result: "No Products found" })
+    }
+})
+
 //finally we export the router at the bottom
 module.exports = router
