@@ -8,7 +8,7 @@ const Product = require('../models/Product');
 
 //1. Sign-Up Api 
 //An api with post request to rgister/signup - create a new user in the database
-router.post("/register", async (req, res)=>{
+router.post("/register", async (req, res) => {
     let user = new User(req.body);
     let result = await user.save();
     //currently result is a json object, we need to convert to object data type
@@ -22,31 +22,30 @@ router.post("/register", async (req, res)=>{
 
 //2. Log-In Api 
 //An api with post request to login - create a new session for sign-up user in the database
-router.post("/login", async (req, res)=>{
+router.post("/login", async (req, res) => {
     //destructure email and password from req.body
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     //check if both fields are there, means both the fields exists, they are not empty
-    if(email && password)
-    {
-      let user = await User.findOne(req.body).select('-password');
-      if(user){
-        //if user is found
-        //send back the user without the password field
-        res.send(user);
-      }else{
-        //if no user is found corresponding to entered details
-        res.send({result: "Invalid User credentials"})
-      }
-    }else{
+    if (email && password) {
+        let user = await User.findOne(req.body).select('-password');
+        if (user) {
+            //if user is found
+            //send back the user without the password field
+            res.send(user);
+        } else {
+            //if no user is found corresponding to entered details
+            res.send({ result: "Invalid User credentials" })
+        }
+    } else {
         //if any field email and password is empty
-        res.send({result: "Please enter both the fields"})
+        res.send({ result: "Please enter both the fields" })
     }
 
 })
 
 //3. Add Product Api 
 //An api with post request to add - create a new produc in the database.
-router.post("/add-product", async (req, res)=>{
+router.post("/add-product", async (req, res) => {
 
     let product = new Product(req.body);
     let result = await product.save();
@@ -72,14 +71,30 @@ router.delete("/product/:id", async (req, res) => {
     res.send(result)
 })
 
-// 6.Update Product Api
+// 6.Single Product Detail Api
 // An Api with get request to update specific product with required id from the database
-router.get("/product/:id",async (req, res)=>{
-    let result  = await Product.findOne({_id:req.params.id})
-    if(result){
+router.get("/product/:id", async (req, res) => {
+    let result = await Product.findOne({ _id: req.params.id })
+    if (result) {
+        res.send(result)
+    } else {
+        res.send({ "result": "No Record Found." })
+    }
+})
+
+// 7.Update Product Api
+// An Api with put request to update specific product with required id from the database
+router.put("/product/:id", async (req, res) => {
+
+    let result = await Product.updateOne(
+        { _id: req.params.id },
+        { $set: req.body }
+    )
+    //here we first find the product by id, then set the value to req.body passed in frontent or postman
+    if (result) {
         resp.send(result)
-    }else{
-        resp.send({"result":"No Record Found."})
+    } else {
+        resp.send({ "result": "No Record Found." })
     }
 })
 
